@@ -20,7 +20,11 @@ public class HandlerLoggingInterceptor implements HandlerInterceptor {
 			throws Exception {
 		// コントローラーのハンドラメソッド実行前
 		logger.info("★★リクエスト開始★★");
-		return HandlerInterceptor.super.preHandle(request, response, handler);
+		// 以下でfalseを返却するとハンドラメソッドは呼ばれない
+		// 代わりに任意のレスポンスを返却できる
+	    response.setContentType("application/json");
+	    response.getWriter().write("{\"error\":\"認証が必要です\"}");
+		return false;
 	}
 
 	@Override
